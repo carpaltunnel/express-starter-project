@@ -1,27 +1,29 @@
+const model = require('../models/widgets');
 class WidgetsCoordinator {
     static createWidget = (widget) => {
         console.log('\tWidgetsCoordinator : createWidget');
-        return true;
+        widget.id = Math.floor(Math.random() * 10000000);
+        return model.createWidget(widget);
     };
     
     static getWidgets = () => {
         console.log('\tWidgetsCoordinator : getWidgets');
-        return true;
+        return model.getWidgets();
     };
     
     static getWidget = (id) => {
         console.log(`\tWidgetsCoordinator : getWidget(${id})`);
-        return true;
+        return model.getWidget(id);
     };
     
     static updateWidget = (id, updatedWidget) => {
         console.log(`\tWidgetsCoordinator : updateWidget(${id})`);
-        return true;
+        return model.updateWidget(id, updatedWidget);
     };
     
     static deleteWidget = (id) => {
         console.log(`\tWidgetsCoordinator : deleteWidget(${id})`);
-        return true;
+        return model.deleteWidget(id);
     };
 }
 
