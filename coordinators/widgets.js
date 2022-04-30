@@ -18,6 +18,8 @@ class WidgetsCoordinator {
     
     static updateWidget = (id, updatedWidget) => {
         console.log(`\tWidgetsCoordinator : updateWidget(${id})`);
+        // Ensure the updatedWidget id does not change or get removed
+        updatedWidget.id = Number.parseInt(id);
         return model.updateWidget(id, updatedWidget);
     };
     
