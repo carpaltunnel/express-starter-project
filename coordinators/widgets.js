@@ -1,8 +1,9 @@
 const model = require('../models/widgets');
+const { v4: uuidv4 } = require('uuid');
 class WidgetsCoordinator {
     static createWidget = (widget) => {
         console.log('\tWidgetsCoordinator : createWidget');
-        widget.id = Math.floor(Math.random() * 10000000);
+        widget.id = uuidv4();
         return model.createWidget(widget);
     };
     
@@ -19,7 +20,7 @@ class WidgetsCoordinator {
     static updateWidget = (id, updatedWidget) => {
         console.log(`\tWidgetsCoordinator : updateWidget(${id})`);
         // Ensure the updatedWidget id does not change or get removed
-        updatedWidget.id = Number.parseInt(id);
+        updatedWidget.id = id;
         return model.updateWidget(id, updatedWidget);
     };
     

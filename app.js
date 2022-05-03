@@ -7,7 +7,8 @@ const widgetColorChecker = require('./middleware/widgetColorChecker');
 const app = express();
 app.use(bodyParser.json());
 
-app.use(widgetColorChecker());
+app.post('*', widgetColorChecker());
+app.put('*', widgetColorChecker());
 
 app.use('/api/v1/widgets', widgetsRouter);
 
