@@ -1,26 +1,27 @@
+const DB = require('../lib/database');
+const COLLECTION = 'widgets';
+
+// TODO : REMOVE ME
 let widgets = [];
 class WidgetsModel {
-    static createWidget = (widget) => {
+    static createWidget = async (widget) => {
         console.log('\t\tWidgetsModel : createWidget');
         //console.log(JSON.stringify(widget, 2, 2));
         // Database insert here;
-        widgets.push(widget);
+        await DB.getDb().collection(COLLECTION).insertOne(widget);
         return widget;
     };
     
     static getWidgets = () => {
         console.log('\t\tWidgetsModel : getWidgets');
-        return widgets;
+
+        return DB.getDb().collection(COLLECTION).find({}).toArray();
     };
     
     static getWidget = (id) => {
         console.log(`\t\tWidgetsModel : getWidget(${id})`);
 
-        // What if it isn't found?
-
-        return widgets.find((w) => {
-            return w.id === id;
-        });
+        return DB.getDb().collection(COLLECTION).findOne({ id });
     };
     
     static updateWidget = (id, updatedWidget) => {
@@ -41,19 +42,7 @@ class WidgetsModel {
     static deleteWidget = (id) => {
         console.log(`\t\tWidgetsModel : deleteWidget(${id})`);
         
-        const originalWidgetsCount = widgets.length;
-
-        // Remove the specified widget by ID
-        widgets = widgets.filter((w) => {
-          return w.id !== id;
-        });
-
-        // What if it isn't found? 
-        if (originalWidgetsCount === widgets.length) {
-            return false;
-        }
-
-        return true;
+        return DB.getDb().collection(COLLECTION).deleteOne({ id });
     };
 }
 
