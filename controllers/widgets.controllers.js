@@ -1,10 +1,10 @@
 const coordinator = require('../coordinators/widgets');
 
-const createWidget = (req, res, next) => {
+const createWidget = async (req, res, next) => {
 	console.log('widgetsController: createWidget');
 	//console.log(JSON.stringify(req.body));
 
-	const result = coordinator.createWidget(req.body);
+	const result = await coordinator.createWidget(req.body);
 	res.status(201).json(result);
 };
 
@@ -31,10 +31,10 @@ const getWidget = async (req, res, next) => {
 	}
 };
 
-const updateWidget = (req, res, next) => {
+const updateWidget = async (req, res, next) => {
 	console.log(`widgetsController: updateWidget(${req.params.id})`);
 	//console.log(JSON.stringify(req.body));
-	const widget = coordinator.updateWidget(req.params.id, req.body);
+	const widget = await coordinator.updateWidget(req.params.id, req.body);
 
 	// If widget with ID was found in database
 	if (widget) {

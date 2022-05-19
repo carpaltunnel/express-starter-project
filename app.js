@@ -36,9 +36,8 @@ const dbConfig = {
 	database: 'arcaDB',
 	options: {
 		useNewUrlParser: true,
-        useUnifiedTopology: true,
-		//poolSize: 3,
-		//maxPoolSize: 10,
+    useUnifiedTopology: true,
+    maxPoolSize: 3,
 	},
 };
 

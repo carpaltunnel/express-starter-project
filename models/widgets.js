@@ -1,8 +1,6 @@
 const DB = require('../lib/database');
 const COLLECTION = 'widgets';
 
-// TODO : REMOVE ME
-let widgets = [];
 class WidgetsModel {
     static createWidget = async (widget) => {
         console.log('\t\tWidgetsModel : createWidget');
@@ -24,18 +22,25 @@ class WidgetsModel {
         return DB.getDb().collection(COLLECTION).findOne({ id });
     };
     
-    static updateWidget = (id, updatedWidget) => {
+    static updateWidget = async (id, updatedWidget) => {
         console.log(`\t\tWidgetsModel : updateWidget(${id})`);
 
-        // Find the specified widget by ID and replace/update it
-        const widgetIndex = widgets.findIndex(w => (w.id === id));
-        
-        // What if it isn't found?
-        if (widgetIndex === -1) {
+        // Only allow updates on these fields
+        const updateQuery = {
+            $set: {
+                post: updatedWidget.post,
+                year: updatedWidget.year,
+                class: updatedWidget.class,
+                color: updatedWidget.color,
+                hexColor: updatedWidget.hexColor,
+            }
+        };
+
+        const updateResult = await DB.getDb().collection(COLLECTION).updateOne({ id }, updateQuery);
+
+        if (updateResult.modifiedCount === 0) {
             return null;
         }
-
-        widgets[widgetIndex] = updatedWidget;
         return updatedWidget;
     };
     
