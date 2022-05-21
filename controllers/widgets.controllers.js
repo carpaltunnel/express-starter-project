@@ -57,10 +57,23 @@ const deleteWidget = async (req, res, next) => {
 	}
 };
 
+const patchWidget = async (req, res, next) => {
+	console.log(`widgetsController: patchWidget(${req.params.id})`);
+	//console.log(JSON.stringify(req.body));
+	const widget = await coordinator.patchWidget(req.params.id, req.body);
+
+	// If widget with ID was found in database
+	if (widget) {
+		res.status(200).json(widget);
+	} else {
+		res.status(404).send();
+	}
+};
 module.exports = {
 	createWidget,
 	getWidgets,
 	getWidget,
 	updateWidget,
 	deleteWidget,
+	patchWidget,
 };

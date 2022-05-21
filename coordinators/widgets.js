@@ -28,6 +28,10 @@ class WidgetsCoordinator {
         console.log(`\tWidgetsCoordinator : deleteWidget(${id})`);
         return model.deleteWidget(id);
     };
+
+    static patchWidget = (id, patchedWidget) => {
+        return model.patchWidget(id, patchedWidget);
+    };
 }
 
 module.exports = WidgetsCoordinator;

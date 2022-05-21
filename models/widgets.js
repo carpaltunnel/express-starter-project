@@ -49,6 +49,29 @@ class WidgetsModel {
         
         return DB.getDb().collection(COLLECTION).deleteOne({ id });
     };
+
+    static patchWidget = async (id, patchedWidget) => {
+        //const patchQuery = { $set: {} };
+        const setQuery = {};
+
+        // Update any provided key to a new value (except id)
+        Object.keys(patchedWidget).forEach((key) => {
+            if (key === 'id') {
+                return;
+            }
+
+            setQuery[key] = patchedWidget[key];
+        });
+
+        const patchResult = await DB.getDb().collection(COLLECTION)
+            .findOneAndUpdate({ id }, { $set: setQuery }, { returnDocument: 'after' });
+
+        if (patchResult.lastErrorObject.updatedExisting === false) {
+            return null;
+        }
+
+        return patchResult.value;
+    };
 }
 
 module.exports = WidgetsModel;
